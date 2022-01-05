@@ -1,0 +1,175 @@
+'''
+Weekly Salary
+Write a function that takes a list of hours and returns the total weekly salary.
+•	The input list hours is listed sequentially, ordered from Monday to Sunday.
+•	A worker earns $10 an hour for the first 8 hours.
+•	For every overtime hour, he earns $15.
+•	On weekends, the employer pays double the usual rate, regardless how many hours were worked previously that week. 
+For instance, 10 hours worked on a weekday would pay 80+30 = $110, but on a weekend it would pay 160+60 = $220.
+
+Examples
+weekly_salary([8, 8, 8, 8, 8, 0, 0]) ➞ 400
+
+weekly_salary([10, 10, 10, 0, 8, 0, 0]) ➞ 410
+
+'''
+
+def weekly(list1):
+    result=0
+    for l in list1[:5]:
+        if 0<l<=8:
+            result=result+l*10
+        elif l>8:
+            result=result+8*10+(l-8)*15
+    for l in list1[5:]:
+        if 0<l<=8:
+            result=result+l*20
+        elif l>8:
+            result=result+8*20+(l-8)*30
+    return result
+
+print(weekly([10, 10, 10, 0, 8, 0, 0]))
+
+
+'''
+
+Write a Python program to generate the next 15 leap years starting from a given year. 
+Populate the leap years into a list and display the list. 
+
+'''
+
+def find_leap(given_year):
+    list_of_leap=[]
+    while len(list_of_leap)!=15:
+        #if y%4==0 and y%100!=0 or y%400==0
+        if given_year%4==0:
+            if given_year%100==0:
+                if given_year%400==0:
+                    list_of_leap.append(given_year)
+            else:
+                list_of_leap.append(given_year)
+        given_year=given_year+1
+    return list_of_leap
+
+leap_years=find_leap(2000)
+print(leap_years)
+
+
+'''
+ARS Gems Store sells different varieties of gems to its customers.
+
+Write a Python program to calculate the bill amount to be paid by a customer 
+based on the list of gems and quantity purchased. 
+Any purchase with a total bill amount above Rs.30000 is entitled for 5% discount. 
+If any gem required by the customer is not available in the store, then consider total bill amount to be -1.
+
+Assume that quantity required by the customer for any gem will always be greater than 0.
+
+Perform case-sensitive comparison wherever applicable.
+'''
+
+def bill(gems_list,price_list,reqd_gems,quantity):
+    bill_amount=0
+    for gem in reqd_gems:
+        if gem in gems_list:
+            i1=gems_list.index(gem)
+            i2=reqd_gems.index(gem)
+            bill_amount=bill_amount+(price_list[i1]*quantity[i2])
+            if bill_amount>=30000:
+                bill_amount=bill_amount*0.95
+        else:
+            return -1
+    return bill_amount
+
+gems_list=["Emerald","Ivory","Jasper","Ruby","Garnet"]
+price_list=[1760,2119,1599,3920,3999]
+reqd_gems=["Ivory","Ruby","Emerald"]
+quantity=[2,3,1]
+
+bill_=bill(gems_list,price_list,reqd_gems,quantity)
+print(bill_)
+
+'''
+Given a string containing uppercase characters (A-Z), compress the string using Run Length encoding. 
+Repetition of character has to be replaced by storing the length of that run.
+Write a python function which performs the run length encoding for a given String and returns the run length encoded String.
+Provide different String values and test your program
+
+Sample Input                    Expected Output
+
+AAAABBBBCCCCCCCC                   4A4B8C
+
+AABCCA                            2A1B2C1A
+'''
+
+def encode(message):
+    encode=message+"0"
+    l=[]
+    count=1
+    for index,value in enumerate(encode):
+        if value!="0":
+            if value==encode[index+1]:
+                count+=1
+            else:
+                l.append(str(count))
+                l.append(value)
+                count=1
+    return "".join(l)
+
+encoded=encode("AABCCA")
+print(encoded)
+
+'''
+A teacher is conducting a camp for a group of five children. 
+Based on their performance and behavior during the camp, the teacher rewards them with chocolates.
+
+Write a Python function to
+
+1. Find the total number of chocolates received by all the children put together.
+Assume that each child is identified by an id and it is stored in a tuple and 
+the number of chocolates given to each child is stored in a list.
+
+2. The teacher also rewards a child with few extra chocolates for his/her best conduct during the camp.
+
+If the number of extra chocolates is less than 1, an error message "Extra chocolates is less than 1", should be displayed.
+
+If the given child Id is invalid, an error message "Child id is invalid" should be displayed. 
+Otherwise, the extra chocolates provided for the child must be added to his/her existing number of chocolates 
+and display the list containing the total number of chocolates received by each child.
+'''
+
+child_id=(10,20,30,40,50)
+chocolates=[4,6,12,8,5]
+
+def reward_child(child_id_reward,extra_chocs):
+    s=sum(chocolates)
+    print(s)
+    if extra_chocs<1:
+        print("Extra chocolates is less than 1")
+    elif child_id_reward not in child_id:
+        print("Child id is invalid")
+    else:
+        i=child_id.index(child_id_reward)
+        chocolates[i]=chocolates[i]+extra_chocs
+        print(chocolates)
+
+reward_child(20,0)
+
+
+
+'''
+Find the True Equations
+In this you have to give a list containing equations, with each equation written as a string. 
+example:
+["1+1=2", "2+2=3", "5*5=10", "3/3=1"]
+If you do the math, you'll see that the equations "1+1=2" and "3/3=1" are actually true while "2+2=3" and "5*5=10" are false.
+Write a function which, given a list of equations as above, returns only the true equations. 
+For instance, for the example above the output should be:
+["1+1=2", "3/3=1"]
+
+Examples
+true_equations(["2*2=4"]) ➞ ["2*2=4"]
+
+true_equations(["1+1=3", "3-1=1"]) ➞ []
+
+'''
