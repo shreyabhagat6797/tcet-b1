@@ -1,0 +1,247 @@
+'''freight '''
+
+class Customer:
+    def __init__(self,customer_id,customer_name,address):
+        self.__customer_id=customer_id
+        self.__customer_name=customer_name
+        self.__address=address
+
+    def get_customer_id(self):
+        return self.__customer_id
+    
+    def get_customer_name(self):
+        return self.__customer_name
+
+    def get_address(self):
+        return self.__address
+
+    def validate_customer_id(self):
+        id=str(self.__customer_id)
+        if (id[0]=='1' and len(id)==6):
+            return True
+        else:
+            return False
+
+class Freight:
+    counter=198
+    def __init__(self,receipent_customer,from_customer,weight,distance):
+        self.__receipent_customer=receipent_customer
+        self.__from_customer=from_customer
+        self.__weight=weight
+        self.__distance=distance
+        self.__freight_id=0
+        self.__freight_charge=0
+
+    def get_receipent_customer(self):
+        return self.__receipent_customer
+
+    def get_from_customer(self):
+        return self.__from_customer
+
+    def get_weight(self):
+        return self.__weight
+
+    def get_distance(self):
+        return self.__distance
+
+    def get_freight_id(self):
+        return self.__freight_id
+
+    def get_freight_charge(self):
+        return self.__freight_charge
+
+    def validate_weight(self):
+        if self.__weight%5==0:
+            return True
+        else:
+            return False
+
+    def validate_distance(self):
+        if self.__distance>=500 and self.__distance<=5000:
+            return True
+        else:
+            return False
+
+    def forward_cargo(self):
+        if Customer.validate_customer_id(self.__from_customer) and Customer.validate_customer_id(self.__receipent_customer) and self.validate_weight() and self.validate_distance():
+            self.__freight_id=Freight.counter+2
+            Freight.counter+=2
+            self.__freight_charge=(self.__weight*150)+(self.__distance*60)
+            return self.__freight_id and self.__freight_charge
+        else:
+            self.__freight_charge=0
+
+c1=Customer(112233,"john","chennai")
+c2=Customer(123456,"steve","Mumbai")
+f1=Freight(c1,c2,15,505)     
+f1.forward_cargo()
+print(f1.get_freight_charge())
+print(f1.get_freight_id())   
+
+
+
+'''
+Missing Digit
+Have the function MissingDigit(str) take the str parameter, 
+which will be a simple mathematical formula with three numbers, 
+a single operator (+, -, *, or /) and an equal sign (=) and return the digit that completes the equation. 
+In one of the numbers in the equation, there will be an x character, 
+and your program should determine what digit is missing. 
+
+For example, if str is "3x + 12 = 46" then your program should output 4. 
+The x character can appear in any of the three numbers 
+and all three numbers will be greater than or equal to 0 and less than or equal to 1000000.
+'''
+
+'''def MissingDigit(exp):
+    
+    # Split the expression to
+    # extract operands, operator
+    # and resultant
+    exp = list(exp.split())
+  
+    first_operand = exp[0]
+    operator = exp[1]
+    second_operand = exp[2]
+    resultant = exp[-1]
+  
+    # If x is present in resultant
+    if 'x' in resultant:
+        x = resultant
+        first_operand = int(first_operand)
+        second_operand = int(second_operand)
+  
+        if operator == '+':
+            res = first_operand + second_operand
+        elif operator == '-':
+            res = first_operand - second_operand
+        elif operator == '*':
+            res = first_operand * second_operand
+        else:
+            res = first_operand // second_operand
+  
+     # If x in present in operands
+    else:
+  
+        resultant = int(resultant)
+  
+        # If x in the first operand
+        if 'x' in first_operand:
+  
+            x = first_operand
+            second_operand = int(second_operand)
+  
+            if operator == '+':
+                res = resultant - second_operand
+            elif operator == '-':
+                res = resultant + second_operand
+            elif operator == '*':
+                res = resultant // second_operand
+            else:
+                res = resultant * second_operand
+  
+        # If x is in the second operand
+        else:
+  
+            x = second_operand
+            first_operand = int(first_operand)
+  
+            if operator == '+':
+                res = resultant-first_operand
+            elif operator == '-':
+                res = first_operand + resultant
+            elif operator == '*':
+                res = resultant // first_operand
+            else:
+                res = first_operand // resultant
+  
+    res = str(res)
+    k = 0
+    for i in x:
+        if i == 'x':
+            result = res[k]
+            break
+        else:
+            k = k + 1
+  
+    return result
+  
+  
+# Driver Code
+if __name__ == '__main__':
+    # input expression
+    exp = "3x + 12 = 46"
+  
+    print(MissingDigit(exp))
+'''
+items=[]
+class Item:
+    def __init__(self,item_id,description,price_per_quantity):
+        self.__item_id=item_id.upper()
+        self.__description=description.upper()
+        self.__price_per_quantity=price_per_quantity
+        items.append(self)
+
+    def get_item_id(self):
+        return self.__item_id
+
+    def get_description(self):
+        return self.__description
+
+    def get_price_per_quantity(self):
+        return self.__price_per_quantity
+
+class Bill:
+    counter=1000
+    def __init__(self):
+        self.__bill_id=1000
+        self.__bill_amount=0
+
+    def get_bill_id(self):
+        return self.__bill_id
+
+    def get_bill_amount(self):
+        return self.__bill_amount
+
+    def generate_bill_amount(self,item_quantity,items):
+        if not self.__bill_amount:
+            for key,value in item_quantity.items():
+                for item in items:
+                    if item.get_item_id()==key.upper():
+                        self.__bill_amount+=value*item.get_price_per_quantity()
+                        break
+            if self.__bill_amount>0:
+                self.__bill_id="B"+str(Bill.counter+1)
+                Bill.counter+=1
+
+class Customer:
+    def __init__(self,customer_name):
+        self.__customer_name=customer_name
+        self.__payment_status=None
+
+    def get_customer_name(self):
+        return self.__customer_name
+
+    def get_payment_status(self):
+        return self.__payment_status
+
+    def pay_bill(self,bill):
+        self.__payment_status="Paid"
+        print(self.get_customer_name())
+        print(bill.get_bill_id())
+        print(bill.get_bill_amount())
+
+item_quantity={'Ir987':3,'Ir346':2,'Ir658':4,'Ir123':2}
+
+i1=Item('Ir987','Sunfeast',100.0)
+i2=Item('Ir658','Oats',151.0)
+i3=Item('Ir346','Maggie',35.75)
+i4=Item('Ir234','Kissan Jam',100.0)
+i5=Item('Ir123','Nescafe',55.5)
+i6=Item('Ir111','Milk',100.0)
+
+b=Bill()
+b.generate_bill_amount(item_quantity,items)
+
+c=Customer("ABC")
+c.pay_bill(b)
