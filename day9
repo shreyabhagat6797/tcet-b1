@@ -10,7 +10,7 @@ Output Queue: 10080, 2520 (front-rear)
 
 '''
 
-'''class Queue:
+class Queue:
     def __init__(self,max_size):
         self.__max_size=max_size
         self.__elements=[None]*self.__max_size
@@ -72,7 +72,7 @@ number_queue.display()
 print()
 solution_queue=check_numbers(number_queue)
 solution_queue.display()
-'''
+
 '''
 1)	Given a stack of integers, 
 write a python program that updates the input stack such that 
@@ -83,7 +83,7 @@ Input stack (top-bottom) :   5 66  5  8  7
 Output:  66  8  7  5  5
 
 '''
-'''class Stack:
+class Stack:
     def __init__(self,max_size):
         self.__max_size=max_size
         self.__elements=[None]*self.__max_size
@@ -153,7 +153,7 @@ change_smallest_value(number_stack)
 print("After the change:")
 number_stack.display()
 
-'''
+
 
 #linkedlist
 
